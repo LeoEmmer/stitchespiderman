@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedra, Papel ou Tesoura</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .player-options img,
+        .enemy-options img {
+            max-width: 150px;
+            opacity: 0.3;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .player-options img:hover,
+        .enemy-options img:hover {
+            opacity: 0.7;
+            transform: scale(1.1);
+        }
+
+        .player-options, .enemy-options {
+            width: 50%;
+        }
+
+        .align {
+            display: flex;
+            justify-content: center;
+        }
+
+        .player-options img.selected,
+        .enemy-options img.selected {
+            opacity: 1;
+            border: 3px solid #00ff00;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media screen and (max-width: 768px) {
+            .align {
+                flex-direction: column;
+                align-items: center;
+            }
+            .player-options, .enemy-options {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Pedra, Papel ou Tesoura!</h1>
+    <h2 class="vencedor"></h2>
+    <hr>
+    <div class="align">
+        <div class="player-options">
+            <img opt="pedra" src="rock.png" alt="Pedra" />
+            <img opt="papel" src="paper.png" alt="Papel" />
+            <img opt="tesoura" src="tesoura.png" alt="Tesoura" />
+        </div>
+        <div class="enemy-options">
+            <img opt="pedra" src="rock.png" alt="Pedra" />
+            <img opt="papel" src="paper.png" alt="Papel" />
+            <img opt="tesoura" src="tesoura.png" alt="Tesoura" />
+        </div>
+    </div>
+    <button onclick="resetGame()">Reiniciar Jogo</button>
+
+    <script>
+        const playerImages = document.querySelectorAll('.player-options img');
+        const enemyImages = document.querySelectorAll('.enemy-options img');
+        const vencedor = document.querySelector('.vencedor');
+        let playerOpt = "";
+        let inimigoOpt = "";
+
+        const rules = {
+            pedra: 'tesoura',
+            papel: 'pedra',
+            tesoura: 'papel'
+        };
+
+        function resetSelections() {
+            document.querySelectorAll('img').forEach(img => img.classList.remove('selected'));
+        }
+
+        function inimigoJogar() {
+            const randIndex = Math.floor(Math.random() * 3);
+            const enemyChoice = enemyImages[randIndex];
+            resetSelections();
+            enemyChoice.classList.add('selected');
+            inimigoOpt = enemyChoice.getAttribute('opt');
+            validarVitoria();
+        }
+
+        function validarVitoria() {
+            if (playerOpt === inimigoOpt) {
+                vencedor.innerHTML = "Empate!";
+            } else if (rules[playerOpt] === inimigoOpt) {
+                vencedor.innerHTML = "Você venceu!";
+            } else {
+                vencedor.innerHTML = "O inimigo venceu!";
+            }
+        }
+
+        playerImages.forEach(img => {
+            img.addEventListener('click', function () {
+                resetSelections();
+                this.classList.add('selected');
+                playerOpt = this.getAttribute('opt');
+                inimigoJogar();
+            });
+        });
+
+        function resetGame() {
+            resetSelections();
+            vencedor.innerHTML = "";
+            playerOpt = "";
+            inimigoOpt = "";
+        }
+    </script>
+</body>
+</html>
