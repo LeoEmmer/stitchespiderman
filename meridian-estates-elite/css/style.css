@@ -1,0 +1,243 @@
+/* ============================================================
+   Meridian Estates — ELITE pilot (dark premium · warm gold)
+   bg #070604 · bg-deep #040302 · surface #100D08 · raised #1A1409
+   line rgba(216,178,106,.16) · gold #C6A15B · glow #E9CE8F
+   ink #F7F2E9 / #C9BFA9 / #8A7F68 · radius 20px
+   ============================================================ */
+:root{
+  --bg:#070604; --bg-deep:#040302; --surface:#100D08; --raised:#1A1409;
+  --line:rgba(216,178,106,.16); --action:#B99049; --action-strong:#C6A15B;
+  --glow:#E9CE8F; --ink:#F7F2E9; --ink-2:#C9BFA9; --ink-3:#8A7F68;
+  --radius:20px; --container:1240px;
+  --spring:cubic-bezier(.22,1.35,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Inter",system-ui,-apple-system,sans-serif;
+  font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--action-strong); color:#171106}
+h1,h2,h3{font-family:"Sora",sans-serif; line-height:1.08; letter-spacing:-.02em}
+em{font-style:normal; color:var(--glow)}
+a{color:var(--action-strong)}
+img{max-width:100%; display:block}
+
+/* ---------- header ---------- */
+header.site{
+  position:fixed; inset:0 0 auto 0; z-index:60;
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+  padding:16px clamp(20px,4vw,44px);
+  background:linear-gradient(180deg, rgba(4,3,2,.85), rgba(4,3,2,.55) 70%, transparent);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+}
+.wordmark{font-family:"Sora",sans-serif; font-weight:800; font-size:19px; color:var(--ink); text-decoration:none; letter-spacing:-.01em}
+.wordmark span{color:var(--action-strong)}
+header.site nav{display:flex; gap:30px}
+header.site nav a{color:var(--ink-2); text-decoration:none; font-size:15px; font-weight:500; transition:color .25s}
+header.site nav a:hover{color:var(--ink)}
+.headphone{color:var(--ink); text-decoration:none; font-weight:600; font-size:15px; border:1px solid var(--line); padding:9px 16px; border-radius:999px; background:rgba(16,13,8,.6); transition:border-color .25s, background .25s}
+.headphone:hover{border-color:var(--action-strong); background:rgba(198,161,91,.12)}
+@media (max-width:760px){ header.site nav{display:none} }
+
+/* ---------- story / scrub stage ---------- */
+.story{position:relative; background:var(--bg-deep)}
+.stage{
+  position:relative; height:100svh; min-height:560px; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  /* the poster is the stage background too: even if the <img> or the canvas
+     fails, the visual is painted — the background is never empty */
+  background:#050403 url("../assets/poster.webp") center/cover no-repeat;
+}
+.stage canvas{
+  position:absolute; inset:0; width:100%; height:100%; display:block;
+}
+.stage .poster{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+}
+.stage canvas{opacity:0; transition:opacity .6s ease}
+.stage canvas.ready{opacity:1}
+.stage .poster.gone{opacity:0; transition:opacity .6s ease}
+/* total frame failure: the poster stays, no matter what */
+html.frames-failed .stage .poster{opacity:1 !important}
+html.frames-failed .stage canvas{display:none}
+.veil{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(4,3,2,.78) 0%, rgba(4,3,2,.45) 42%, rgba(4,3,2,0) 72%),
+    linear-gradient(0deg, rgba(4,3,2,.86) 0%, rgba(4,3,2,0) 30%),
+    linear-gradient(180deg, rgba(4,3,2,.55) 0%, rgba(4,3,2,0) 22%);
+}
+.beat{
+  position:absolute; z-index:3; left:clamp(20px,6vw,84px); bottom:clamp(84px,13vh,132px);
+  max-width:640px; opacity:0; visibility:hidden; transform:translateY(26px);
+  transition:opacity .55s ease, transform .55s var(--spring), visibility 0s linear .55s;
+  pointer-events:none;
+}
+.beat.is-active{opacity:1; visibility:visible; transform:translateY(0); transition:opacity .55s ease, transform .55s var(--spring); pointer-events:auto}
+.beat .eyebrow, .eyebrow{
+  font-family:"Sora",sans-serif; font-size:12.5px; font-weight:700;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--glow); margin-bottom:18px;
+}
+.beat h1{font-size:clamp(40px,6.2vw,76px); font-weight:800; margin-bottom:20px; text-shadow:0 4px 40px rgba(0,0,0,.55)}
+.beat-title{font-size:clamp(36px,5.2vw,64px); font-weight:800; margin-bottom:16px; text-shadow:0 4px 40px rgba(0,0,0,.55)}
+.beat-kicker{font-family:"Sora",sans-serif; font-size:12.5px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-2); margin-bottom:16px}
+.beat-sub{color:var(--ink-2); font-size:clamp(16px,1.6vw,19px); max-width:520px; text-shadow:0 2px 18px rgba(0,0,0,.6)}
+.beat-sub strong{color:var(--ink)}
+.beat .cta{margin-top:26px}
+.cta{
+  display:inline-block; background:var(--action); color:#171106; text-decoration:none;
+  font-family:"Sora",sans-serif; font-weight:700; font-size:16px;
+  padding:15px 30px; border-radius:999px; border:0; cursor:pointer;
+  box-shadow:0 10px 34px rgba(185,144,73,.35);
+  transition:transform .3s var(--spring), background .25s, box-shadow .25s;
+}
+.cta:hover{background:var(--action-strong); transform:translateY(-2px); box-shadow:0 16px 42px rgba(198,161,91,.45)}
+
+.story-ui{position:absolute; z-index:4; inset:auto 0 0 0; pointer-events:none}
+.loadwrap{
+  position:absolute; left:50%; bottom:110px; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  font-size:12.5px; color:var(--ink-2); letter-spacing:.08em; text-transform:uppercase;
+  transition:opacity .5s;
+}
+.loadbar{width:180px; height:3px; background:rgba(216,178,106,.18); border-radius:99px; overflow:hidden}
+.loadbar i{display:block; height:100%; width:0%; background:var(--glow); border-radius:99px; transition:width .2s}
+.loadwrap.done{opacity:0}
+.scrollhint{
+  position:absolute; left:50%; bottom:44px; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:9px;
+  font-size:11.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-2);
+  opacity:0; transition:opacity .6s;
+}
+.scrollhint.show{opacity:1}
+.scrollhint i{width:1px; height:38px; background:linear-gradient(180deg, var(--glow), transparent); display:block; animation:drip 1.8s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(.3); transform-origin:top; opacity:.4}50%{transform:scaleY(1); opacity:1}100%{transform:scaleY(.3); transform-origin:top; opacity:.4}}
+.progress{position:absolute; left:0; right:0; bottom:0; height:3px; background:rgba(216,178,106,.12)}
+.progress i{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--action), var(--glow))}
+
+/* static fallback (reduced motion / no JS) — hidden when the scrub is live */
+.story-static{display:none}
+html.reduced .stage{display:none}
+html.reduced .story-static{
+  display:block; max-width:var(--container); margin:0 auto; padding:120px clamp(20px,4vw,44px) 30px;
+}
+html.reduced .story-static img{border-radius:var(--radius); border:1px solid var(--line); margin-bottom:34px}
+html.reduced .story-static ol{list-style:none; display:grid; gap:14px}
+html.reduced .story-static li{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px 24px; color:var(--ink-2)}
+html.reduced .story-static li strong{color:var(--ink); font-family:"Sora",sans-serif}
+
+/* ---------- sections ---------- */
+.section{max-width:var(--container); margin:0 auto; padding:clamp(84px,11vw,140px) clamp(20px,4vw,44px)}
+.head{display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:56px; flex-wrap:wrap}
+.head h2{font-size:clamp(30px,3.6vw,46px); font-weight:700; max-width:560px}
+.head .intro, .intro{color:var(--ink-2); max-width:440px}
+.section .eyebrow{margin-bottom:14px}
+
+/* reveals (JS enhances; content is visible without JS) */
+html.js [data-reveal]{opacity:0; transform:translateY(28px)}
+html.js [data-reveal].in, html.reduced [data-reveal]{opacity:1; transform:none}
+
+/* listing specs */
+.specs{
+  display:grid; grid-template-columns:repeat(6,1fr); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:var(--radius);
+  overflow:hidden; margin-bottom:44px;
+}
+.spec{background:var(--surface); padding:24px 22px}
+.spec span{display:block; font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-3); margin-bottom:8px}
+.spec strong{font-family:"Sora",sans-serif; font-size:clamp(19px,1.8vw,24px); font-weight:700; color:var(--ink)}
+@media (max-width:920px){ .specs{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:520px){ .specs{grid-template-columns:repeat(2,1fr)} }
+.listing-copy{display:grid; gap:18px; max-width:760px}
+.listing-copy p{color:var(--ink-2); font-size:18px}
+
+/* details route */
+.route{position:relative; display:grid; gap:22px}
+.route::before{
+  content:""; position:absolute; left:27px; top:12px; bottom:12px; width:1px;
+  background:linear-gradient(180deg, transparent, var(--line) 12%, var(--line) 88%, transparent);
+}
+.step{display:flex; gap:26px; align-items:stretch}
+.node{
+  flex:0 0 54px; width:54px; height:54px; border-radius:50%; z-index:1;
+  display:flex; align-items:center; justify-content:center;
+  font-family:"Sora",sans-serif; font-weight:700; font-size:15px; color:var(--glow);
+  background:var(--surface); border:1px solid var(--line);
+  box-shadow:0 0 0 6px var(--bg);
+}
+.card{
+  flex:1; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+  padding:28px 30px; transition:border-color .3s, transform .3s var(--spring);
+}
+.card:hover{border-color:rgba(233,206,143,.4); transform:translateY(-3px)}
+.tag{font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--glow); margin-bottom:10px}
+.card h3{font-size:22px; margin-bottom:10px}
+.card p{color:var(--ink-2)}
+@media (max-width:640px){ .route::before{left:23px} .node{flex-basis:46px; width:46px; height:46px} .step{gap:16px} .card{padding:22px} }
+
+/* advisor quotes */
+.reviews{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+.review{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:30px}
+.review .stars{color:var(--action-strong); letter-spacing:.3em; margin-bottom:16px; font-size:13px}
+.review blockquote{font-size:17.5px; line-height:1.55; margin-bottom:18px}
+.review figcaption{font-family:"Sora",sans-serif; font-weight:600}
+.review figcaption span{color:var(--ink-3); font-weight:500}
+@media (max-width:920px){ .reviews{grid-template-columns:1fr} }
+
+/* booking */
+.bookgrid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start}
+.bookinfo h2{font-size:clamp(30px,3.6vw,44px); margin-bottom:16px}
+.contact{display:grid; gap:22px; margin-top:34px}
+.contact dt{font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--glow); margin-bottom:6px}
+.contact dd{color:var(--ink-2)}
+.contact dd a{color:var(--ink); text-decoration:none; font-weight:600}
+.bookform{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:32px}
+.bookform .fields{display:grid; gap:18px}
+.bookform label{display:grid; gap:8px}
+.bookform label span{font-size:13.5px; font-weight:600; color:var(--ink-2)}
+.bookform input, .bookform select{
+  background:var(--bg); border:1px solid var(--line); border-radius:12px;
+  color:var(--ink); font:inherit; font-size:16px; padding:13px 15px; width:100%;
+  transition:border-color .25s;
+}
+.bookform input:focus, .bookform select:focus{outline:none; border-color:var(--action-strong)}
+.bookform input.invalid, .bookform select.invalid{border-color:#FF7A7A}
+.cta.submit{width:100%; margin-top:4px}
+.formnote{font-size:13px; color:var(--ink-3); text-align:center}
+.formsuccess{text-align:center; padding:22px 0 8px}
+.formsuccess svg{width:64px; height:64px; margin:0 auto 16px; stroke:var(--glow); stroke-width:3}
+.formsuccess h3{font-size:24px; margin-bottom:8px}
+.formsuccess p{color:var(--ink-2); margin-bottom:22px}
+.pcta{
+  display:inline-block; text-align:center; text-decoration:none; cursor:pointer;
+  font-family:"Sora",sans-serif; font-weight:700; font-size:15px; color:var(--ink);
+  border:1px solid var(--line); background:transparent; padding:13px 22px; border-radius:999px;
+  transition:border-color .25s, background .25s, transform .3s var(--spring);
+}
+.pcta:hover{border-color:var(--action-strong); transform:translateY(-2px)}
+@media (max-width:920px){ .bookgrid{grid-template-columns:1fr} }
+
+/* footer + call fab */
+footer.site{
+  border-top:1px solid var(--line); padding:30px clamp(20px,4vw,44px) 110px;
+  display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  color:var(--ink-3); font-size:14px; max-width:var(--container); margin:0 auto;
+}
+.callfab{
+  position:fixed; right:18px; bottom:18px; z-index:70; display:none;
+  align-items:center; gap:9px; background:var(--action); color:#171106; text-decoration:none;
+  font-family:"Sora",sans-serif; font-weight:700; font-size:15px;
+  padding:14px 22px; border-radius:999px; box-shadow:0 14px 38px rgba(185,144,73,.45);
+}
+.callfab svg{width:19px; height:19px}
+@media (max-width:760px){ .callfab{display:inline-flex} footer.site{padding-bottom:96px} }
+
+@media (prefers-reduced-motion: reduce){
+  .scrollhint i{animation:none}
+  .beat, .cta, .card, .pcta{transition:none}
+}
