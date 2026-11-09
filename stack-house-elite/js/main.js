@@ -2,8 +2,8 @@
    Stack House — ELITE pilot machinery
    Lenis smooth scroll + GSAP ScrollTrigger pin/scrub
    Receita B: frame sequence on canvas (mobile-safe)
-   - Desktop: assets/frames/        120 frames · 1280px · ~1.9 MB
-   - Mobile:  assets/frames-mobile/ 120 frames ·  720px · ~0.6 MB
+   - Desktop: assets/frames/        120 frames · 1280px · ~1.6 MB
+   - Mobile:  assets/frames-mobile/ 120 frames ·  720px · ~0.7 MB
    ============================================================ */
 (function () {
   "use strict";

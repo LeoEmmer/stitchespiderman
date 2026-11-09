@@ -28,9 +28,9 @@ ffmpeg -ss 0.4 -t 10 -i ancora.mp4 -vf "crop=1728:972:96:54,hflip,fps=12,scale=7
 
 | Sequência | Frames | Resolução | Peso total | Orçamento |
 |---|---|---|---|---|
-| Desktop | **120** | 1280×720 | **1,83 MB** | ≤ 5 MB ✅ |
-| Mobile | **120** | 720×405 | **0,61 MB** | ≤ 3 MB ✅ |
-| Poster (LCP/fallback) | 1 | 1280×720 | 13 KB | — |
+| Desktop | **120** | 1280×720 | **1,65 MB** | ≤ 5 MB ✅ |
+| Mobile | **120** | 720×405 | **0,71 MB** | ≤ 3 MB ✅ |
+| Poster (LCP/fallback) | 1 | 1728×972 (16:9) | 23 KB | — |
 
 ## Stack e como a página funciona
 
@@ -66,7 +66,7 @@ Chromium headless (Playwright) + servidor local; scripts e prints em `verificaca
 | Mobile 390px | frame set mobile carrega, FAB de ligação visível, 0 erros ✅ |
 | `prefers-reduced-motion` | versão estática completa (poster + beats em lista), palco oculto ✅ |
 | Peso inicial (HTML+CSS+JS+poster) | **193 KB** (meta < 1,5 MB ✅) |
-| Peso total do site (sem o vídeo-âncora) | 2,55 MB |
+| Peso total do site (sem o vídeo-âncora) | 2,56 MB |
 
 Nota de processo: a primeira rodada pegou um `FRAME_COUNT` errado (121 × 120 arquivos reais) — corrigido antes de publicar; a contagem de arquivos em disco é a fonte da verdade. Único erro de rede nos testes locais: Google Fonts bloqueado pelo proxy de saída desta VM (`ERR_TUNNEL_CONNECTION_FAILED`) — limitação do ambiente, não da página (ao vivo, via relay local pro mesmo proxy, as fontes carregaram e os prints `live-*` mostram Sora/Inter aplicadas).
 
