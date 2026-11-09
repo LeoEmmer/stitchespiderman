@@ -8,7 +8,7 @@
 (function () {
   "use strict";
 
-  var FRAME_COUNT = 120;
+  var FRAME_COUNT = 82;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hasLibs = typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined" && typeof Lenis !== "undefined";
 
