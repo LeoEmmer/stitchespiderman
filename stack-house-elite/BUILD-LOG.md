@@ -3,7 +3,37 @@
 **Data:** 09/11/2026 · **Pasta:** `~/workspace/cda-elite/piloto-1-burger/`
 **Base:** receita provada do Piloto 3 (`~/workspace/cda-elite/piloto-3-detailing/`) — scaffold vanilla + GSAP 3.12.5/ScrollTrigger + Lenis 1.1.18 vendored, palco pinado +400%, canvas com lerp 0,14, loader corrigido (contadores settled/ok/failed separados, poster no canvas + fundo CSS do palco, `window.__scrubStatus()`, classe `frames-failed`, `prefers-reduced-motion` estático) copiado **byte a byte**; só mudam marca, copy, tokens e a sequência de frames. Identidade: Dark Premium CDA em variante quente — bg #0A0705 · ação ember #F07D1A · glow âmbar #FFB347 · Sora/Inter.
 
-## ⚠️ Substituição importante (ler primeiro)
+## 🔁 REMAKE — troca da footage-âncora (09/11/2026, mesmo dia)
+
+**Motivo (veredito do Leonardo sobre o piloto ao vivo): 3/10.** Nas palavras dele, o sanduíche do clipe original parecia que *"roubaram o hambúrguer de dentro do sanduíche e ficou apenas pão com alface e maionese"*, com *"umas batatas super aleatórias caindo do nada"* — a footage matava o apetite em vez de vender o burger ("esse site é bom pra quem quer emagrecer"). A engenharia do site foi mantida intacta; **só a sequência de frames trocou**.
+
+**A nova footage:**
+- **Clipe:** burger se montando **camada por camada de verdade** sobre prato preto giratório — base do pão → patty grosso coberto de cheddar derretido escorrendo → camada fresca crocante → molho da casa → pão de gergelim fecha — 12,4s, 2560×1440 @50fps
+- **Autor/fonte:** Kaffeesüchtig — https://pixabay.com/videos/id-219126/
+- **Licença:** Pixabay Content License (uso comercial permitido, sem atribuição obrigatória)
+- **Janela usada:** 0,6s → 10,6s (120 frames; o arco termina no burger fechado girando, que sustenta o beat final + CTA)
+
+**Como foi escolhida (QA visual obrigatório, lição do 3/10):** caça em 4 fontes (Pixabay via API · Pexels · Mixkit · Coverr), 14 buscas e **9 clipes baixados com stills extraídos (início/meio/fim) e avaliados olhando as imagens**, com apetite como critério nº 1. Finalistas e motivos de rejeição: patty selando na chapa com marcas de grelha profundas e gordura brilhando (Pixabay 321027/199545, lindos — mas é só o patty, o sanduíche nunca aparece) · cheeseburger girando em macro premium do Pexels (8879540 — vertical 2160×4096; o corte 16:9 captura só a cúpula do pão) · cheeseburger no prato com push-in do Mixkit (12016 — patty fino na sombra, salada dominando o quadro, free tier rotulado "personal use") · burger aberto premium no fundo dark do Coverr (5878 — patty grosso e tomate brilhante, mas sem queijo, burger pequeno no quadro e mão soltando cebolinha) · patties crus sob labaredas (Pixabay 124823/124831 — carne crua domina) · o clipe original e seu irmão de molho (79561/78962 — o defeito que o Leonardo apontou). O 219126 venceu por ser o único que entrega **o sanduíche artesanal completo se formando**: patty presente e grosso, queijo derretendo de verdade, frescos com aparência premium e o arco de montagem que os 6 beats narram. **Compromisso honesto:** o fundo é madeira quente (não o preto puro do clipe anterior) — os véus escuros do palco (gradientes CSS de até 85% à esquerda) cinematografam a cena, e o grade da receita (contraste + vinheta) aprofunda os tons; conferido nos prints `remake-*` da verificação.
+
+**Receita (a mesma do Piloto 3, crop adaptado à fonte 2560×1440):**
+```bash
+ffmpeg -ss 0.6 -t 10 -i ancora.mp4 -vf "crop=2048:1152:0:144,fps=12,scale=1280:-2,eq=contrast=1.07:brightness=-0.02:saturation=0.94,vignette=PI/5" -c:v libwebp -q:v 72 assets/frames/f%03d.webp
+ffmpeg -ss 0.6 -t 10 -i ancora.mp4 -vf "crop=2048:1152:0:144,fps=12,scale=720:-2,<mesma grade>"  -c:v libwebp -q:v 68 assets/frames-mobile/f%03d.webp
+```
+
+| Sequência | Frames | Resolução | Peso total | Orçamento |
+|---|---|---|---|---|
+| Desktop | **120** | 1280×720 | **2,76 MB** | ≤ 5 MB ✅ |
+| Mobile | **120** | 720×405 | **1,24 MB** | ≤ 3 MB ✅ |
+| Poster (frame do burger fechado, t=10,2s) | 1 | 1280×720 | 44 KB | — |
+
+**Publicação do remake:** mesmos URL e subpasta (`stack-house-elite/`); os packs do espelho foram redivididos por peso (≤ ~900 KB/arquivo): **5× desktop + 2× mobile** + poster — o `index.html` do espelho ganhou as tags dos packs novos (a build canônica não muda). Alt do poster atualizado ("stacked layer by layer"). **Verificação: 16/16 na build canônica local, 16/16 no espelho local e 16/16 ao vivo** (prints `remake-*` em `verificacao/`).
+
+**Troca futura (client-ready):** segue valendo o clipe bespoke do Higgsfield quando o ciclo de créditos virar — a régua agora é a do veredito: patty grosso e suculento visível, queijo derretendo, ingredientes premium, nada caindo aleatório no quadro.
+
+---
+
+## ⚠️ Substituição importante (ler primeiro) — build original, superada pelo remake acima
 
 O clipe-âncora bespoke do plano (burger se montando camada por camada em fundo dark contínuo, via Higgsfield, padrão KALUA do Vadim) **não foi gerado** — créditos de vídeo do Higgsfield estão esgotados neste ciclo e a kie é reserva intocável (regra da casa, custo zero em mídia). No lugar, a sequência de frames roda com **stock gratuito do Pixabay**:
 
