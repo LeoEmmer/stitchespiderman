@@ -8,7 +8,7 @@
 (function () {
   "use strict";
 
-  var FRAME_COUNT = 82;
+  var FRAME_COUNT = 108;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hasLibs = typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined" && typeof Lenis !== "undefined";
 
@@ -271,7 +271,7 @@
   ScrollTrigger.create({
     trigger: ".story",
     start: "top top",
-    end: "+=400%",
+    end: "+=500%",
     pin: ".stage",
     pinSpacing: true,
     anticipatePin: 1,
