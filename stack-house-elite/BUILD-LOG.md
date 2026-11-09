@@ -3,7 +3,28 @@
 **Data:** 09/11/2026 · **Pasta:** `~/workspace/cda-elite/piloto-1-burger/`
 **Base:** receita provada do Piloto 3 (`~/workspace/cda-elite/piloto-3-detailing/`) — scaffold vanilla + GSAP 3.12.5/ScrollTrigger + Lenis 1.1.18 vendored, palco pinado +400%, canvas com lerp 0,14, loader corrigido (contadores settled/ok/failed separados, poster no canvas + fundo CSS do palco, `window.__scrubStatus()`, classe `frames-failed`, `prefers-reduced-motion` estático) copiado **byte a byte**; só mudam marca, copy, tokens e a sequência de frames. Identidade: Dark Premium CDA em variante quente — bg #0A0705 · ação ember #F07D1A · glow âmbar #FFB347 · Sora/Inter.
 
-## 🔁 REMAKE 2 — herói do Grok, corte MELT (09/11/2026) — ✅ O QUE ESTÁ AO VIVO AGORA
+## 🔁 REMAKE 3 — extensão do MELT (09/11/2026) — ✅ O QUE ESTÁ AO VIVO AGORA
+
+**Motivo (feedback do Leonardo, 03:48 PT, sobre o Remake 2 ao vivo):** aprovado no geral ("ficou muito bom"), **mas o scroll acabava bem quando a sensação do derretimento começava** — faltavam 1–2 segundos de melt + fumaça pra saborear a experiência. Correção aprovada em duas partes: **âncora mais longa** + **mais scroll**.
+
+- **Âncora:** `hero-clips/ancora-melt-v5-long.mp4` — **4,50s** (o mesmo clipe v5 do Grok, aparado mais tarde pelo coordenador com QA frame a frame em 4,25/4,5/4,75/5,0s: **4,5s = drape mais cheio, escorridas mais longas e a fumaça presente, com o burger 100% legível**; em 4,75s+ o queijo começa a enterrar o tomate e a frente do burger). Cópia de trabalho atualizada em `ancora.mp4`.
+- **Receita:** `fps=24` → **108 frames**, mesma grade leve `eq=contrast=1.04` (sem vinheta). Desktop a q72 estourou o orçamento (5,20 MB) → **q68 = 4,95 MB** ✅; mobile q68 = **2,09 MB** ✅. **Poster = frame 1** (q80, 53 KB).
+- **Mais scroll:** pin do palco **`+=400%` → `+=500%`** no ScrollTrigger — os beats são por progresso, então cada legenda ganha ~25% mais respiro; conferido na verificação que o beat final (5) + CTA "Order ahead" pousam sobre o frame de melt completo.
+- **`FRAME_COUNT` 82 → 108** no `js/main.js`; estrutura, beats e copy intactos.
+
+| Sequência | Frames | Resolução | Peso total | Orçamento |
+|---|---|---|---|---|
+| Desktop | **108** | 1280×720 | **4,95 MB** | ≤ 5 MB ✅ |
+| Mobile | **108** | 720×405 | **2,09 MB** | ≤ 3 MB ✅ |
+
+- **Packs do espelho reconstruídos:** **8× desktop + 4× mobile** + poster (inalterado), cada arquivo ≤ 880 KB; `index.html` do espelho ganhou as tags dos 2 packs novos.
+- **Publicação:** mesma URL e subpasta (`stack-house-elite/`). Commits: `596ffea9` (core) · `8d06e35a` (desktop 1–4) · `c899571b` (desktop 5–8) · `dde0ca6b` (mobile 1–4) · este BUILD-LOG. Blobs remotos auditados idênticos aos locais (`git hash-object` × SHA do contents API: main.js, index.html, pack-desktop-8, pack-mobile-4).
+- **Verificação: 16/16 na canônica local, 16/16 no espelho local e 16/16 AO VIVO** (prints/relatórios `long-*` em `verificacao/remake-grok/`) — 108/108 frames ok nos dois conjuntos, 0 erros JS, scrub avança (frame 59 @55%) e reverte, beat final + CTA sobre o melt completo, 32/32 reveals, form success, mobile + FAB, reduced-motion estático.
+- **Regra que fica (palavras do feedback):** a transformação é o clímax do hero de scroll — ela precisa de **tempo de permanência**; nunca terminar o scroll no instante em que ela aparece.
+
+---
+
+## 🔁 REMAKE 2 — herói do Grok, corte MELT (09/11/2026) — superado pelo Remake 3 acima
 
 **Decisão do Leonardo (03:32 PT):** ele quis a **experiência do derretimento, cortada no ponto gostoso** — nem o clipe limpo (push-in, sem melt) nem o melt completo (que vira flood de queijo/molho e enterra o burger). A footage-âncora final é **dele**: still gerada por ele no Grok Imagine (burger no pedestal, fundo preto puro, zero texto) animada por ele no grok.com (SuperGrok web), versão **v5 aparada pelo coordenador** com QA frame a frame da progressão do melt: pristine → o queijo amolece → drape bonito com as primeiras escorridas — **termina ANTES do flood/pooling**.
 
