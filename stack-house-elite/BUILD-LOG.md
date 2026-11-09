@@ -3,7 +3,28 @@
 **Data:** 09/11/2026 · **Pasta:** `~/workspace/cda-elite/piloto-1-burger/`
 **Base:** receita provada do Piloto 3 (`~/workspace/cda-elite/piloto-3-detailing/`) — scaffold vanilla + GSAP 3.12.5/ScrollTrigger + Lenis 1.1.18 vendored, palco pinado +400%, canvas com lerp 0,14, loader corrigido (contadores settled/ok/failed separados, poster no canvas + fundo CSS do palco, `window.__scrubStatus()`, classe `frames-failed`, `prefers-reduced-motion` estático) copiado **byte a byte**; só mudam marca, copy, tokens e a sequência de frames. Identidade: Dark Premium CDA em variante quente — bg #0A0705 · ação ember #F07D1A · glow âmbar #FFB347 · Sora/Inter.
 
-## 🔁 REMAKE — troca da footage-âncora (09/11/2026, mesmo dia)
+## 🔁 REMAKE 2 — herói do Grok, corte MELT (09/11/2026) — ✅ O QUE ESTÁ AO VIVO AGORA
+
+**Decisão do Leonardo (03:32 PT):** ele quis a **experiência do derretimento, cortada no ponto gostoso** — nem o clipe limpo (push-in, sem melt) nem o melt completo (que vira flood de queijo/molho e enterra o burger). A footage-âncora final é **dele**: still gerada por ele no Grok Imagine (burger no pedestal, fundo preto puro, zero texto) animada por ele no grok.com (SuperGrok web), versão **v5 aparada pelo coordenador** com QA frame a frame da progressão do melt: pristine → o queijo amolece → drape bonito com as primeiras escorridas — **termina ANTES do flood/pooling**.
+
+- **Clipe-âncora:** `hero-clips/ancora-melt-v5.mp4` — 3,42s, 1280×720 (cópia de trabalho em `ancora.mp4`)
+- **Nota de processo (honesta):** a v3 (versão limpa, push-in + pulso do anel neon, burger intacto) chegou a ser extraída (85 frames @12fps) e verificada localmente (16/16 canônica + 16/16 espelho), mas **nunca foi publicada** — a decisão do melt chegou antes de qualquer push. A v3 fica como fallback limpo (`hero-clips/v3.mp4` · `ancora-grok-v3-clean.mp4`); voltar pra ela = mesma receita a 12fps/85 frames.
+- **Receita:** `fps=24` (clipe curto → 82 frames), grade **leve** `eq=contrast=1.04` — sem vinheta e sem escurecer (o clipe já é peça dark premium pronta sobre preto puro; a vinheta da receita antiga comeria o glow do pedestal), `-c:v libwebp` q72 desktop / q68 mobile. **Poster = frame 1** (q80, 52 KB).
+- **`FRAME_COUNT` 120 → 82** no `js/main.js`; estrutura, beats e copy intactos (as legendas seguem carregando a história, padrão da casa). Alt do poster atualizado pro novo herói ("on a glowing pedestal against black").
+
+| Sequência | Frames | Resolução | Peso total | Orçamento |
+|---|---|---|---|---|
+| Desktop | **82** | 1280×720 | **3,91 MB** | ≤ 5 MB ✅ |
+| Mobile | **82** | 720×405 | **1,55 MB** | ≤ 3 MB ✅ |
+
+- **Packs do espelho reconstruídos:** 7× desktop + 3× mobile + poster, cada arquivo ≤ 880 KB; `index.html` do espelho ganhou as tags dos packs novos.
+- **Publicação:** mesma URL e subpasta (`stack-house-elite/`). Commits: `75bf14c9` (core) · `a76c46da` (poster) · `47d117ae` (desktop-1) · `7bdd3c35` (desktop 2–7) · `aadd0cbc` (mobile 1–3) · este BUILD-LOG. **Corrida de escrita concorrente:** a publicação do Piloto 5 (Lumière) rodou em paralelo no mesmo repo e duas tentativas do `pack-desktop-2.js` foram rejeitadas ("not a fast forward"); a recuperação foi consolidar os packs restantes em dois pushes snapshot (desktop 2–7 ≈ 4,4 MB · mobile 1–3 ≈ 2,1 MB, dentro do limite de 16 MiB do snapshot) — blobs remotos auditados idênticos aos locais (`git hash-object` × SHA do contents API).
+- **Verificação: 16/16 na canônica local, 16/16 no espelho local e 16/16 AO VIVO** (prints/relatórios `melt-*` em `verificacao/remake-grok/`). A 1ª tentativa ao vivo pegou o Pages ainda propagando (packs desktop incompletos → 12/16); conferidos os 7 packs desktop byte a byte via curl (idênticos), a rodada refeita passou 16/16.
+- **Troca futura (client-ready):** segue o clipe bespoke do Higgsfield/Seedance quando o ciclo virar — a régua agora é a do melt aprovado: patty grosso visível o tempo todo, queijo derretendo até o drape, **sem flood**.
+
+---
+
+## 🔁 REMAKE — troca da footage-âncora (09/11/2026, mesmo dia) — superado pelo Remake 2 acima
 
 **Motivo (veredito do Leonardo sobre o piloto ao vivo): 3/10.** Nas palavras dele, o sanduíche do clipe original parecia que *"roubaram o hambúrguer de dentro do sanduíche e ficou apenas pão com alface e maionese"*, com *"umas batatas super aleatórias caindo do nada"* — a footage matava o apetite em vez de vender o burger ("esse site é bom pra quem quer emagrecer"). A engenharia do site foi mantida intacta; **só a sequência de frames trocou**.
 
