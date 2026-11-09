@@ -86,3 +86,32 @@ Deploy: arrastar a pasta num projeto Cloudflare Pages (o `_headers` já está na
 4. Lighthouse mobile real no link do Pages (meta ≥ 90) + teste de scroll com o dedo num celular mediano.
 5. Gravação de tela de 20–30s do scroll (desktop + mobile) — matéria-prima do reel "US$ 490 website vs US$ 4.900 website".
 6. Stills de antes/depois reais do cliente (slot que o BUILD-NOTE do demo já previa) pras seções internas, gerados nas ferramentas da casa.
+
+---
+
+## Correção do fundo vazio + publicação (09/11/2026)
+
+**O que o Leonardo viu no celular:** abriu o `index.html` pela prévia de arquivo do app e viu **só a copy cruzando** — sem carro, sem movimento no fundo.
+
+**Causa (conclusão por evidência):** dois fatores somados.
+1. **A prévia de arquivo do app não é um servidor web** — ela não resolve os caminhos relativos da pasta (frames/poster). Sem os arquivos, a sequência nunca chega.
+2. **Um defeito real do loader antigo amplificou o problema:** o `onerror` de cada frame **contava como carregamento**. Com 15+ frames falhados, o loader marcava o canvas como "pronto", aplicava `.gone` no poster (fade-out) e o `drawFrame` retornava em silêncio (`naturalWidth === 0`) — ou seja, mesmo que o poster tivesse carregado, ele era **descartado** e o fundo ficava vazio: só o véu escuro + a copy. Reproduzido localmente antes da correção (cenário de frames bloqueados).
+
+**O que mudou (build canônica `piloto-3-detailing/`):**
+- Contadores separados no loader: `settled / ok / failed`. O canvas só assume (`canvas.ready` + `poster.gone`) depois que um frame **real** foi pintado com sucesso.
+- `drawFrame` retorna sucesso/falha e, se o frame alvo não decodificou, pinta o **frame válido mais próximo** — nunca ar.
+- O poster é pintado no canvas assim que carrega (`paintPoster`) e virou também o **fundo CSS do palco** (`.stage { background: … url("../assets/poster.webp") center/cover }`) — o fundo nunca fica vazio.
+- Falha total dos 71 frames → classe `html.frames-failed`: poster travado visível (CSS `!important`), canvas ocultado, beats/copy seguem funcionando, e o console registra `console.error` claro com a pasta e o primeiro arquivo que falhou (erros individuais limitados aos 3 primeiros + resumo final). Handle de verificação: `window.__scrubStatus()`.
+- **Orçamentos de peso mantidos** (frames 3,03 MB desktop / 1,15 MB mobile; poster 45 KB).
+
+**Verificação local (chrome-headless-shell via CDP, prints em `verificacao/`):**
+- Normal (desktop e mobile): `ok 71/71`, canvas pintado (luminância média 83→90 desktop, 95→112 mobile ao rolar), beats avançam 0→3→fim, 0 erros de console — `fix-desktop-*`, `fix-mobile-*`.
+- Frames bloqueados (servidor retornando 404 nas sequências): `ok 0/71`, `frames-failed` ativo, poster visível (opacidade 1) cobrindo o palco, beats avançando — `fix-semframes-*`.
+
+**Publicação — URL pública:**
+### https://leoemmer.github.io/stitchespiderman/marin-auto-detail-elite/
+
+- **Por que esse endereço:** a integração do GitHub **não tem permissão de criar repositórios** (403 "Resource not accessible by integration" ao criar `marin-auto-detail-elite`). Reaproveitado o repo antigo `LeoEmmer/stitchespiderman` (joguinho de 2025, Pages já ativo servindo da branch `main`), publicando numa **subpasta** `marin-auto-detail-elite/` — o conteúdo original do repo não foi tocado.
+- **Espelho "packed":** o push via conector só aceita arquivos de texto (snapshot UTF-8), então os 142 frames + poster viajam **embutidos em base64** em `js/pack-*.js` (~5,9 MB de texto, em 8 commits fatiados — um push único de 6 MB retornou HTTP 413). O `main.js` detecta `window.MAD_PACKED` e decodifica pras mesmas imagens via Blob URLs (suporte inerte na build canônica de arquivos). Cópia de publicação: `~/workspace/cda-elite/piloto-3-detailing-ghpages/`; registro de sincronização: `~/workspace/cda-elite/piloto-3-pages-repo.muse-github-snapshot-sync.json`.
+- **Verificação ao vivo (headless, desktop + mobile):** `ok 71/71` nos dois, canvas pintado e mudando com o scroll (83→90 / 95→112), beat 3 no meio da história, **0 erros de console** — prints `live-desktop-*` e `live-mobile-*` em `verificacao/`. (Nota de bastidor: o Chromium headless desta VM precisou de um relay local pro proxy de saída + `--ignore-certificate-errors` por causa da CA do proxy; o conteúdo foi conferido também via curl com a CA correta — 200 em todos os arquivos.)
+- **Pendências de sempre:** clipe bespoke do Higgsfield quando o ciclo virar (trocar a pasta de frames na build canônica e regenerar o espelho), formulário → Supabase, domínio próprio — o espelho do Pages é vitrine do piloto, não o deploy de cliente.
